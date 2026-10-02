@@ -9,7 +9,7 @@
         <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Abdulrhman-0/SD-Prompt-Reader-plus"></a>
     <a href="https://github.com/psf/black">
         <img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-    <img alt="platform" src="https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-lightgrey">
+    <img alt="platform" src="https://img.shields.io/badge/platform-windows-lightgrey">
     <br><br>
 
 [English](README.md) | [简体中文](README.zh-Hans.md)
@@ -48,7 +48,7 @@
 *以上实现了原项目路线图中的三项计划：图像批处理、多图像/文件夹模式、用户设置。*
 
 ## 功能
-- 支持 macOS、 Windows 和 Linux
+- 仅支持 Windows
 - 仅提供图形界面
 - 简单的拖放交互
 - 复制 prompt 到剪贴板
@@ -89,42 +89,21 @@
 
 ## 下载
 ### Windows 用户
-从 [GitHub Releases](https://github.com/Abdulrhman-0/SD-Prompt-Reader-plus/releases/latest) 下载可执行文件
-### macOS 用户
-从 [GitHub Releases](https://github.com/Abdulrhman-0/SD-Prompt-Reader-plus/releases/latest) 下载可执行文件
-### Linux 用户 (不定期测试)
-~~我很确定 Linux 用户可以在没有可执行文件的情况下搞明白怎么用~~
-- 最低Python版本要求: 3.10
-- 确保你的 Python 中安装了 tkinter 包.  
-如果没有，请使用软件包管理器安装 python3-tk 包.  
-e.g. `sudo apt-get install python3-tk` (基于 Debian 的发行版)  
+从 [GitHub Releases](https://github.com/Abdulrhman-0/SD-Prompt-Reader-plus/releases/latest) 下载可执行文件。
+解压压缩包后运行 **SD Prompt Reader+.exe**。
 
-你可以按照下方说明从源码运行
-#### 手动运行源码
-1. Clone repo
-    ```bash
-    git clone https://github.com/Abdulrhman-0/SD-Prompt-Reader-plus.git
-    ```
-   或者直接下载 repo 为 zip 格式.
-2. CD 到文件夹并安装依赖
-    ```bash
-    cd SD-Prompt-Reader-plus
-    pip install -r requirements.txt
-    ```
-3. Run
-    ```bash
-   python -m sd_prompt_reader.app
-   ```
+> [!NOTE]
+> 本分支目前仅提供 **Windows** 版本。无需安装 —— 可执行文件是自包含的，不需要 Python。
 
 ## 使用方式
 ### 读取 prompt
-- 打开可执行文件 (.exe 或 .app) 并将图片拖入窗口.
+- 打开可执行文件 (.exe) 并将图片拖入窗口.
 
 或
-- 右键图片选择使用 SD Prompt Reader 作为打开方式
+- 右键图片，选择"打开方式" > SD Prompt Reader+
 
 或
-- 直接将图片拖入可执行文件 (.exe 或 .app).
+- 直接将图片拖入可执行文件 (.exe).
 
 ### 浏览文件夹
 左侧 **Photos** 面板会列出文件夹内的所有图片，无需逐张打开。
@@ -134,7 +113,20 @@ e.g. `sudo apt-get install python3-tk` (基于 Debian 的发行版)
 - 面板标题会显示找到的图片数量。
 
 ### 转换图片（右侧面板）
-右侧 **Convert** 面板可将整个文件夹的图片批量转换为 **JPG**、**PNG** 或 **WEBP**，同时保留生成 prompt 的元数据。
+右侧 **Convert** 面板可将整个文件夹的图片批量转换为 **JPG**、**PNG** 或 **WEBP**。
+
+> [!IMPORTANT]
+> **会保留 prompt 元数据。** 这正是它区别于普通图片转换工具的地方。
+> 普通转换工具在重新编码图片时会丢弃生成元数据，prompt 就永久丢失了。
+> 本工具会把 prompt 写入转换后的文件，之后依然可以读取。
+
+为什么需要它：
+- **释放磁盘空间。** AI 图片文件夹增长很快。把体积较大的 PNG 转成压缩后的 JPG 或 WEBP，
+  同时保留 prompt，即使有成千上万张大图也没问题。
+- **转换文件格式。** 把一整个文件夹的 PNG 转成 JPG/WEBP（或反向转换），不会丢失 prompt。
+- **分享前压缩。** 调低质量滑块，把文件缩小到便于上传，而 prompt 依然随文件保留。
+
+使用方法：
 - 点击 **Add Folder** 选择要转换的文件夹；若留空，则使用 **Photos** 面板中已打开的文件夹。
 - 选择导出目录与目标格式，然后调整质量 / 压缩选项。
 - 点击 **Convert**。转换过程中会显示实时进度，按钮会变为 **Cancel**，窗口保持响应。
@@ -222,24 +214,9 @@ SD Prompt Reader 仅支持由 [Fooocus MoonRide Edition](https://github.com/Moon
 ## 常见问题
 ### 病毒警告
 > [!WARNING]
-> 错误的病毒警报是由我使用的打包工具 _pyinstaller_ 造成的, 这对 _pyinstaller_ 用户是一个常见的问题. 
-> 我花费了许多时间来解决 Windows Defender 的错误警报, 但我没法对每个杀毒软件单独解决问题. 
-> 因此, 你可以选择相信 Windows Defender 或者使用 Linux 用户的使用说明来使用 app.
-### "SD Prompt Reader.app" 已损坏，无法打开。您应该将它移到废纸篓。
-> [!IMPORTANT]
-> 这是一个使用非 appstore 的未签名软件时常见的 macOS 问题, 开发者需要付给苹果每年 $99 来避免这个问题. 
-> 你可以在设置中**隐私与安全性**的**安全性**中选择**允许任何来源**, 但这可能造成危险. 
-> 我推荐的方式是移除 quarantine attributes.
-1. 在应用程序中打开终端. 
-2. 输入以下命令并按回车. 
-
-    `xattr -r -d com.apple.quarantine app的路径`
-
-    比如:
-
-    `xattr -r -d com.apple.quarantine /Applications/SD\ Prompt\ Reader.app`
-
-如果你仍然担心安全性可以选择使用 Linux 用户的使用说明来使用 app.
+> 某些杀毒软件可能会误报。这是由打包工具 _PyInstaller_ 造成的，属于 _PyInstaller_ 用户
+> 常见的问题，并非程序本身的行为。你可以查看本仓库的源代码，或将可执行文件上传到
+> [VirusTotal](https://www.virustotal.com/) 进行验证。
 
 ## 待办
 原项目路线图中的计划已在本分支全部实现：
